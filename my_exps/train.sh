@@ -33,4 +33,4 @@ if [ -d ${work_dir} ]; then
 fi
 echo -e "\033[34m*******************************\033[0m"
     
-CUDA_VISIBLE_DEVICES=${cuda} python tools/train.py ${config} --work-dir ${work_dir} --no-validate
+CUDA_VISIBLE_DEVICES=${cuda} python tools/train.py ${config} --work-dir ${work_dir}
