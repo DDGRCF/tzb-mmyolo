@@ -22,7 +22,8 @@ def register_all_modules(init_default_scope: bool = True):
     import mmyolo.datasets  # noqa: F401,F403
     import mmyolo.engine  # noqa: F401,F403
     import mmyolo.models  # noqa: F401,F403
-
+    import mmyolo.evaluation
+    
     if init_default_scope:
         never_created = DefaultScope.get_current_instance() is None \
                         or not DefaultScope.check_instance_created('mmyolo')
