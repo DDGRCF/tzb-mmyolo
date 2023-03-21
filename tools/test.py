@@ -123,7 +123,7 @@ def main():
             DumpResults(out_file_path=args.out))
 
     # start testing
-    runner.test()
+    runner.val()
 
 
 if __name__ == '__main__':
