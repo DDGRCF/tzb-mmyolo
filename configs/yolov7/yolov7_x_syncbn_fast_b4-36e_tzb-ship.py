@@ -77,8 +77,8 @@ mixup_beta = 8.0  # YOLOv5MixUp
 
 # -----train val related-----
 loss_cls_weight = 0.3
-loss_bbox_weight = 0.05
-loss_obj_weight = 0.7
+loss_bbox_weight = 0.2
+loss_obj_weight = 5
 # BatchYOLOv7Assigner params
 simota_candidate_topk = 10
 simota_iou_weight = 3.0
@@ -166,16 +166,16 @@ model = dict(
 
 pre_transform = [
     dict(type='LoadImageFromFile', file_client_args=_base_.file_client_args),
-    dict(type='LoadAnnotations', with_bbox=True)
-]
-
-train_pipeline = [
-    *pre_transform,
+    dict(type='LoadAnnotations', with_bbox=True),
     dict(
         type='mmdet.Resize',
         scale=img_scale,
         scale_factor=None,
-        keep_ratio=True),
+        keep_ratio=True)
+]
+
+train_pipeline = [
+    *pre_transform,
     dict(
         type='YOLOv5MixUp',
         alpha=mixup_alpha,  # note
@@ -271,9 +271,7 @@ default_hooks = dict(
         max_epochs=max_epochs),
     checkpoint=dict(
         type='CheckpointHook',
-        save_param_scheduler=False,
         interval=save_epoch_intervals,
-        save_best='auto',
         max_keep_ckpts=max_keep_ckpts))
 
 custom_hooks = [
@@ -303,3 +301,7 @@ train_cfg = dict(
     dynamic_intervals=[(max_epochs - num_epoch_stage2, val_interval_stage2)])
 val_cfg = dict(type='ValLoop')
 test_cfg = dict(type='TestLoop')
+
+visualizer = dict(
+    vis_backends = [dict(type='LocalVisBackend'), 
+                    dict(type='WandbVisBackend')])
