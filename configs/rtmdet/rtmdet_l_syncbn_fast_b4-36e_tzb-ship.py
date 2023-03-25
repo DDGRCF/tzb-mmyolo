@@ -259,6 +259,3 @@ train_cfg = dict(
 val_cfg = dict(type='ValLoop')
 test_cfg = dict(type='TestLoop')
 
-visualizer = dict(
-    vis_backends = [dict(type='LocalVisBackend'), 
-                    dict(type='WandbVisBackend')])
