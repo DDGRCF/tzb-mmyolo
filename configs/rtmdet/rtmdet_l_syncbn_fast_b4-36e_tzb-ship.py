@@ -128,7 +128,6 @@ train_pipeline = [
         prob=0.75,
         direction=['horizontal', 'vertical', 'diagonal']),
     dict(type='mmdet.Pad', size=img_scale, pad_val=dict(img=(114, 114, 114))),
-    dict(type='YOLOv5MixUp', use_cached=True, max_cached_images=20),
     dict(type='mmdet.PackDetInputs')
 ]
 

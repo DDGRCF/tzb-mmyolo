@@ -176,12 +176,6 @@ pre_transform = [
 
 train_pipeline = [
     *pre_transform,
-    dict(
-        type='YOLOv5MixUp',
-        alpha=mixup_alpha,  # note
-        beta=mixup_beta,  # note
-        prob=mixup_prob,
-        pre_transform=[*pre_transform]),
     dict(type='YOLOv5HSVRandomAug'),
     dict(type='mmdet.RandomFlip', prob=0.5),
     dict(
