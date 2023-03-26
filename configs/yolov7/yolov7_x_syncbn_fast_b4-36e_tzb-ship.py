@@ -301,7 +301,3 @@ train_cfg = dict(
     dynamic_intervals=[(max_epochs - num_epoch_stage2, val_interval_stage2)])
 val_cfg = dict(type='ValLoop')
 test_cfg = dict(type='TestLoop')
-
-visualizer = dict(
-    vis_backends = [dict(type='LocalVisBackend'), 
-                    dict(type='WandbVisBackend')])
