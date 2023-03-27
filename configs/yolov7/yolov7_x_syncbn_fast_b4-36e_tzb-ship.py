@@ -37,7 +37,7 @@ model_test_cfg = dict(
     # The config of multi-label for multi-class prediction.
     multi_label=True,
     # The number of boxes before NMS.
-    nms_pre=2000,
+    nms_pre=1000,
     score_thr=0.5,  # Threshold to filter out boxes.
     nms=dict(type='nms', iou_threshold=0.1),  # NMS type and threshold
     max_per_img=1000)  # Max number of detections of each image
@@ -177,7 +177,7 @@ pre_transform = [
 train_pipeline = [
     *pre_transform,
     dict(type='YOLOv5HSVRandomAug'),
-    dict(type='mmdet.RandomFlip', prob=0.5),
+    dict(type='mmdet.RandomFlip', prob=0.75),
     dict(
         type='mmdet.PackDetInputs',
         meta_keys=('img_id', 'img_path', 'ori_shape', 'img_shape', 'flip',
@@ -186,13 +186,7 @@ train_pipeline = [
 
 train_pipeline_stage2 = [
     *pre_transform,
-    dict(
-        type='mmdet.Resize',
-        scale=img_scale,
-        scale_factor=None,
-        keep_ratio=True),
     dict(type='YOLOv5HSVRandomAug'),
-    dict(type='mmdet.RandomFlip', prob=0.75),
     dict(type='mmdet.Pad', size=img_scale, pad_val=dict(img=(114, 114, 114))),
     dict(type='mmdet.PackDetInputs')
 ]
@@ -265,7 +259,7 @@ default_hooks = dict(
         max_epochs=max_epochs),
     checkpoint=dict(
         type='CheckpointHook',
-        interval=save_epoch_intervals,
+        interval=4,
         max_keep_ckpts=max_keep_ckpts))
 
 custom_hooks = [
@@ -291,7 +285,7 @@ test_evaluator = val_evaluator
 train_cfg = dict(
     type='EpochBasedTrainLoop',
     max_epochs=max_epochs,
-    val_interval=save_epoch_intervals,
+    val_interval=12,
     dynamic_intervals=[(max_epochs - num_epoch_stage2, val_interval_stage2)])
 val_cfg = dict(type='ValLoop')
 test_cfg = dict(type='TestLoop')
